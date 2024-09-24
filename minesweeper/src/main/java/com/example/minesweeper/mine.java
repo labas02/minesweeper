@@ -11,16 +11,14 @@ public class mine {
     boolean is_flagged;
     boolean is_mine;
     Button but;
-    ImageView flag_img;
-    ImageView mine_img;
 
-    public mine(int mines_around, boolean is_flagged, boolean is_mine, Button but, ImageView flag_img, ImageView mine_img) {
+    public mine(int mines_around, boolean is_flagged, boolean is_mine, Button but) {
         this.mines_around = mines_around;
         this.is_flagged = is_flagged;
         this.is_mine = is_mine;
         this.but = but;
-        this.flag_img = flag_img;
-        this.mine_img = mine_img;
+        ;
     }
+
 }
 
