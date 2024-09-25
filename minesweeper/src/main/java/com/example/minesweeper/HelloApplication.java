@@ -5,31 +5,31 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.IdentityHashMap;
-import java.util.Objects;
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class HelloApplication extends Application {
-    @Override
-    public void start(Stage stage) throws IOException {
-        int size_x = 15;
-        int size_y = 15;
+
+    int mine_flagged=0;
+    int mine_count;
+    int size_x = 15;
+    int size_y = 15;
+    mine mine_arr[][];
+    public void start(Stage stage) {
+
+        mine_count = 25;
         HBox root = new HBox();
-        root.setMinSize(size_x*35,size_y*35);
         FlowPane mine_field = new FlowPane();
-        mine_field.setVgap(0);
-        mine_field.setMaxSize(size_x*35,size_y*35);
-        mine_field.setMaxSize(size_x*35,size_y*35);
+
+        mine_field.setStyle("-fx-background-color:blue");
+
+        mine_field.setPrefSize(size_x * 35, size_y * 35);
 
         mine_field.setAlignment(Pos.CENTER);
-         mine mine_arr[][] = new mine[size_x][size_y];
           mine_arr = initialize_field(stage,size_x,size_y);
 
         for (int i = 0; i < size_x; i++) {
@@ -39,10 +39,10 @@ public class HelloApplication extends Application {
             }
         }
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < mine_count; i++) {
             ThreadLocalRandom random = ThreadLocalRandom.current();
-            int x = 0;
-            int y = 0;
+            int x;
+            int y;
             x = random.nextInt(0, size_x);
             y = random.nextInt(0, size_y);
             mine_arr[x][y].is_mine=true;
@@ -72,16 +72,16 @@ public class HelloApplication extends Application {
 
         for (int i = 0; i <= pos_x; i++) {
             for (int j = 0; j <= pos_y; j++) {
-                Button but_tmp = initializeButton(mine_arr,i,j,stage);
+                Button but_tmp = initializeButton(i,j,stage);
 
-                mine_arr[i][j] = new mine(0,false,false,but_tmp);
+                mine_arr[i][j] = new mine(0,false,false,but_tmp,false);
 
             }
         }
         return mine_arr;
     }
 
-   private Button initializeButton(mine mine_arr[][], int i1,int j1,Stage stage) {
+   private Button initializeButton( int i1,int j1,Stage stage) {
 Button but_tmp = new Button();
         but_tmp.setMaxSize(35,35);
         but_tmp.setMinSize(35,35);
@@ -96,17 +96,35 @@ Button but_tmp = new Button();
                 }
                 if (!mine_arr[i1][j1].is_mine){
                     but_tmp.setText(String.valueOf(mine_arr[i1][j1].mines_around));
+                    if (mine_arr[i1][j1].mines_around==0){
+                        reveal_button(i1,j1);
+                    }
                 }
             }
+
             else if (e.getButton() == MouseButton.SECONDARY){
                 if (!mine_arr[i1][j1].is_flagged){
                     mine_arr[i1][j1].but.setText("F");
                     mine_arr[i1][j1].is_flagged=true;
+                    mine_arr[i1][j1].but.setStyle("-fx-background-color: Red");
+                    if (mine_arr[i1][j1].is_mine){
+                        mine_flagged+=1;
+                    }
+                    if (mine_count==mine_flagged){
+                        System.out.println(mine_flagged+" ----- "+mine_count);
+                        Alert close = new Alert(Alert.AlertType.INFORMATION);
+                        close.setContentText("you win");
+                        close.show();
+
+                    }
                 }
                 else {
                     mine_arr[i1][j1].is_flagged=false;
                     mine_arr[i1][j1].but.setText("");
-
+                    mine_arr[i1][j1].but.setStyle("-fx-background-color: white");
+                    if (mine_arr[i1][j1].is_mine){
+                        mine_flagged-=1;
+                    }
                 }
 
             }
@@ -114,6 +132,26 @@ Button but_tmp = new Button();
         return but_tmp;
     }
 
+private void reveal_button(int i1, int j1){
+    if (i1<=0||j1<=0||i1>=size_x||j1>=size_y||mine_arr[i1][j1].is_revealed) {
+        return;
+    }
+    mine_arr[i1][j1].is_revealed=true;
+            for (int i = i1 - 1; i <= i1 + 1; i++) {
+                for (int j = j1 - 1; j <= j1 + 1; j++) {
+
+                    mine_arr[i][j].but.setText(String.valueOf(mine_arr[i][j].mines_around));
+                    if (mine_arr[i][j].mines_around==0){
+                        reveal_button(i,j);
+                    }
+                    if (!mine_arr[i][j].is_mine) {
+                        mine_arr[i][j].is_revealed = true;
+                    }
+                }
+        }
+
+
+}
 
     public static void main(String[] args) {
         launch();
