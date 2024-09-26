@@ -13,7 +13,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 
-import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class HelloApplication extends Application {
@@ -44,9 +43,7 @@ public class HelloApplication extends Application {
              play.setTranslateY(25);
              play.setText("play");
              play.setStyle("-fx-background-color:grey");
-             play.setOnMouseClicked(e->{
-                 change_window(2,stage);
-             });
+             play.setOnMouseClicked(e-> change_window(2,stage));
              Button quit = new Button();
              quit.setText("quit");
              quit.setTranslateX(-50);
@@ -80,7 +77,7 @@ public class HelloApplication extends Application {
              HBox root = new HBox();
              FlowPane mine_field = new FlowPane();
 
-             mine_field.setPrefSize(size_x * 35, size_y * 35);
+             mine_field.setPrefSize(size_y* 35, size_x * 35);
 
              mine_field.setAlignment(Pos.CENTER);
              mine_arr = initialize_field(stage,size_x,size_y);
@@ -98,17 +95,22 @@ public class HelloApplication extends Application {
                  int y;
                  x = random.nextInt(0, size_x);
                  y = random.nextInt(0, size_y);
-                 mine_arr[x][y].is_mine=true;
-             }
+                 if (mine_arr[x][y].is_mine){
+                     i--;
+                 }else {
+                     mine_arr[x][y].is_mine = true;
+                 }
+                 }
 
-             for (int i = 0; i < size_x; i++) {
-                 for (int j = 0; j < size_y; j++) {
 
-                     for (int k = i-1; k <= i+1; k++) {
-                         for (int l = j-1; l <= j+1 ; l++) {
+             for (int i = 0; i < size_y; i++) {
+                 for (int j = 0; j < size_x; j++) {
+
+                     for (int k = j-1; k <= j+1; k++) {
+                         for (int l = i-1; l <= i+1 ; l++) {
                              if (k>-1 && k<size_x && l>-1 && l<size_y &&mine_arr[k][l].is_mine) {
-                                 mine_arr[i][j].mines_around+=1;
-                                 System.out.println(mine_arr[i][j].mines_around);
+                                 mine_arr[j][i].mines_around+=1;
+                                 System.out.println(mine_arr[j][i].mines_around);
                              }
                          }
                      }
@@ -171,6 +173,7 @@ Button but_tmp = new Button();
                         System.out.println(mine_flagged+" ----- "+mine_count);
                         Alert close = new Alert(Alert.AlertType.CONFIRMATION);
                         close.setContentText("you win");
+                        close.show();
                         change_window(1,stage);
 
                     }
