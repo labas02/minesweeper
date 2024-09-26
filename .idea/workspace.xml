@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ecaab4e8-bc92-4bfb-b11d-3f1e4cf75f55" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/minesweeper/src/main/java/com/example/minesweeper/mine_pos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/minesweeper/src/main/java/com/example/minesweeper/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/minesweeper/src/main/java/com/example/minesweeper/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/minesweeper/src/main/java/com/example/minesweeper/mine.java" beforeDir="false" afterPath="$PROJECT_DIR$/minesweeper/src/main/java/com/example/minesweeper/mine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/minesweeper/target/classes/com/example/minesweeper/HelloApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/minesweeper/target/classes/com/example/minesweeper/HelloApplication.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
