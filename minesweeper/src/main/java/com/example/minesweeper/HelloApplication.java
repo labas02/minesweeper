@@ -46,6 +46,9 @@ public class HelloApplication extends Application {
              play.setOnMouseClicked(e-> change_window(2,stage));
              Button quit = new Button();
              quit.setText("quit");
+             quit.setOnMouseClicked(e->{
+                 stage.close();
+             });
              quit.setTranslateX(-50);
              quit.setTranslateY(25);
              //TextField minecnt= new TextField("number of mines");
