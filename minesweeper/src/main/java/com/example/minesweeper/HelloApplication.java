@@ -63,7 +63,9 @@ public class HelloApplication extends Application {
              sizey.setTextFormatter(new TextFormatter<>((new NumberStringConverter())));
              sizey_txt.setTranslateY(-120);
              sizey.setTranslateY(-100);
-             istack.getChildren().addAll(sizex,minecnt,sizey,play,quit,minetxt,sizex_txt,sizey_txt);
+             Text tutorial = new Text("controls: left mouse button = reveal mine , right button flag mine\n winning condition is flagging all mines");
+             tutorial.setTranslateY(50);
+             istack.getChildren().addAll(sizex,minecnt,sizey,play,quit,minetxt,sizex_txt,sizey_txt,tutorial);
 
              iroot.getChildren().add(istack);
              Scene scene2 = new Scene(iroot);
@@ -167,7 +169,8 @@ Button but_tmp = new Button();
                     mine_arr[i1][j1].is_flagged=true;
                     mine_arr[i1][j1].but.setStyle("-fx-background-color: Red");
                     if (mine_arr[i1][j1].is_mine){
-                        mine_flagged+=1;
+                        mine_flagged++;
+                        System.out.println(mine_flagged);
                     }
                     if (mine_count==mine_flagged){
                         System.out.println(mine_flagged+" ----- "+mine_count);
@@ -183,7 +186,7 @@ Button but_tmp = new Button();
                     mine_arr[i1][j1].but.setText("");
                     mine_arr[i1][j1].but.setStyle("-fx-background-color: white");
                     if (mine_arr[i1][j1].is_mine){
-                        mine_flagged-=1;
+                        mine_flagged--;
                     }
                 }
 
