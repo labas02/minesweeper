@@ -34,6 +34,7 @@ public class HelloApplication extends Application {
 
      switch (window_number){
          case 1:
+             //menu
              HBox iroot = new HBox();
              iroot.setMinSize(250,250);
              StackPane istack = new StackPane();
@@ -51,21 +52,22 @@ public class HelloApplication extends Application {
              });
              quit.setTranslateX(-50);
              quit.setTranslateY(25);
-             //TextField minecnt= new TextField("number of mines");
+
              Text minetxt = new Text("zadejte pocet min");
              minecnt.setTextFormatter(new TextFormatter<>((new NumberStringConverter())));
              minecnt.setTranslateY(-20);
              minetxt.setTranslateY(-40);
-             //TextField sizex = new TextField("sizex");
+
              Text sizex_txt = new Text("zadejte x velikost");
              sizex.setTranslateY(-60);
              sizex_txt.setTranslateY(-80);
              sizex.setTextFormatter(new TextFormatter<>((new NumberStringConverter())));
-             //TextField sizey = new TextField("sizey");
+
              Text sizey_txt = new Text("zadejte y velikost");
              sizey.setTextFormatter(new TextFormatter<>((new NumberStringConverter())));
              sizey_txt.setTranslateY(-120);
              sizey.setTranslateY(-100);
+
              Text tutorial = new Text("controls: left mouse button = reveal mine , right button flag mine\n winning condition is flagging all mines");
              tutorial.setTranslateY(50);
              istack.getChildren().addAll(sizex,minecnt,sizey,play,quit,minetxt,sizex_txt,sizey_txt,tutorial);
@@ -76,6 +78,9 @@ public class HelloApplication extends Application {
              stage.show();
              break;
          case 2:
+             
+             //actual game
+             mine_flagged=0;
              mine_count=Integer.parseInt(String.valueOf(minecnt.getCharacters()));
              size_x= Integer.parseInt(String.valueOf(sizex.getCharacters()));
              size_y=Integer.parseInt(String.valueOf(sizey.getCharacters()));
@@ -93,7 +98,7 @@ public class HelloApplication extends Application {
                      mine_field.getChildren().add(stack);
                  }
              }
-
+//create mines
              for (int i = 0; i < mine_count; i++) {
                  ThreadLocalRandom random = ThreadLocalRandom.current();
                  int x;
@@ -107,7 +112,7 @@ public class HelloApplication extends Application {
                  }
                  }
 
-
+//calculate mines around field
              for (int i = 0; i < size_y; i++) {
                  for (int j = 0; j < size_x; j++) {
 
@@ -150,6 +155,7 @@ Button but_tmp = new Button();
         but_tmp.setMaxSize(35,35);
         but_tmp.setMinSize(35,35);
         but_tmp.setOnMouseClicked(e ->{
+            //conditions for button clicks
             if(e.getButton() == MouseButton.PRIMARY && !mine_arr[i1][j1].is_flagged) {
                 if (mine_arr[i1][j1].is_mine){
                     but_tmp.setText("bum");
@@ -199,6 +205,7 @@ Button but_tmp = new Button();
     }
 
 private void reveal_button(int i1, int j1){
+        //check for bad things
     if (i1<=0||j1<=0||i1>=size_x||j1>=size_y||mine_arr[i1][j1].is_revealed) {
         return;
     }
